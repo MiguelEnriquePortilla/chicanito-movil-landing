@@ -43,3 +43,21 @@ function tick() {
 
 tick();
 setInterval(tick, 1000);
+
+// Header shadow on scroll
+const header = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('is-scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// Reveal sections on scroll
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
