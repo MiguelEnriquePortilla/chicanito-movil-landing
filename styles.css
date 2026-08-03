@@ -477,21 +477,71 @@ section { padding: 4.5rem 0; }
   z-index: 90;
 }
 
+.chat-mascot {
+  position: absolute;
+  right: 100%;
+  bottom: -4px;
+  margin-right: 2px;
+  width: 92px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+  animation: mascotFloat 3.2s ease-in-out infinite;
+}
+.chat-widget:has(.chat-toggle[aria-expanded="true"]) .chat-mascot { display: none; }
+
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
 .chat-toggle {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   background: var(--navy);
   color: var(--white);
   border: none;
-  padding: 0.55rem 1.2rem;
-  border-radius: 999px;
+  padding: 0.65rem 1.15rem 0.65rem 0.9rem;
+  border-radius: 20px 20px 4px 20px;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
   transition: transform 0.15s ease, background 0.15s ease;
 }
 .chat-toggle:hover { background: #223159; transform: translateY(-2px); }
 .chat-toggle[aria-expanded="true"] { background: #223159; }
+.chat-toggle[aria-expanded="true"] .chat-ping { display: none; }
+
+.chat-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.chat-toggle-label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+.chat-toggle-label strong { color: var(--red); }
+
+@keyframes chatPingPulse {
+  0% { box-shadow: 0 0 0 0 rgba(227, 6, 19, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(227, 6, 19, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(227, 6, 19, 0); }
+}
+.chat-ping {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 13px;
+  height: 13px;
+  background: var(--red);
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  animation: chatPingPulse 1.8s ease-in-out infinite;
+}
 
 .chat-panel {
   position: absolute;
@@ -644,9 +694,11 @@ section { padding: 4.5rem 0; }
 
 @media (max-width: 480px) {
   .chat-widget { right: 1rem; bottom: 1rem; }
-  .chat-toggle { padding: 0.45rem 0.9rem; gap: 0.4rem; }
-  .chat-toggle .toggle-label { font-size: 0.85rem; }
+  .chat-toggle { padding: 0.5rem 0.9rem 0.5rem 0.75rem; gap: 0.4rem; }
+  .chat-icon { width: 19px; height: 19px; }
+  .chat-toggle-label { font-size: 0.85rem; }
   .chat-panel { bottom: 56px; }
+  .chat-mascot { width: 62px; bottom: -2px; }
 }
 
 /* ---------- Reduced motion ---------- */
@@ -654,7 +706,9 @@ section { padding: 4.5rem 0; }
   html { scroll-behavior: auto; }
   .hero-inner > *,
   .reveal,
-  .chat-toggle {
+  .chat-toggle,
+  .chat-ping,
+  .chat-mascot {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
