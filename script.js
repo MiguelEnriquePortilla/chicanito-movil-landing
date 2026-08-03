@@ -165,7 +165,6 @@ const chatToggle = document.getElementById('chatToggle');
 const chatPanel = document.getElementById('chatPanel');
 const chatClose = document.getElementById('chatClose');
 const chatMessages = document.getElementById('chatMessages');
-const chatQuickReplies = document.getElementById('chatQuickReplies');
 const chatForm = document.getElementById('chatForm');
 const chatInput = document.getElementById('chatInput');
 
@@ -179,24 +178,46 @@ function appendChatMessage(html, from) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-function renderQuickReplies() {
-  chatQuickReplies.innerHTML = '';
+function removeQuickReplies() {
+  const existing = document.getElementById('chatQuickReplies');
+  if (existing) existing.remove();
+  const caption = chatMessages.querySelector('.chat-quick-caption');
+  if (caption) caption.remove();
+}
+
+function renderQuickReplies(caption) {
+  removeQuickReplies();
+  if (caption) {
+    const label = document.createElement('p');
+    label.className = 'chat-quick-caption';
+    label.textContent = caption;
+    chatMessages.appendChild(label);
+  }
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-quick-replies';
+  wrap.id = 'chatQuickReplies';
   CHAT_QUICK_REPLIES.forEach((question) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'chat-quick-reply';
     btn.textContent = question;
     btn.addEventListener('click', () => handleChatQuestion(question));
-    chatQuickReplies.appendChild(btn);
+    wrap.appendChild(btn);
   });
+  chatMessages.appendChild(wrap);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function handleChatQuestion(text) {
   const trimmed = text.trim();
   if (!trimmed) return;
+  removeQuickReplies();
   appendChatMessage(trimmed, 'user');
   const answer = findChatAnswer(trimmed);
-  setTimeout(() => appendChatMessage(answer, 'bot'), 350);
+  setTimeout(() => {
+    appendChatMessage(answer, 'bot');
+    renderQuickReplies('¿Otra pregunta?');
+  }, 350);
 }
 
 function openChat() {
