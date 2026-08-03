@@ -130,6 +130,33 @@
 
 </main>
 
+<!-- CHAT WIDGET -->
+<div class="chat-widget">
+  <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat de ayuda Sabrosito FYI" aria-expanded="false">
+    <span class="toggle-track"><span class="toggle-dot"></span></span>
+    <span class="toggle-label">Sabrosito <strong>FYI</strong></span>
+  </button>
+
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat de ayuda Chicanito Móvil" hidden>
+    <div class="chat-header">
+      <img src="assets/logo-badge.jpg" alt="" class="chat-header-logo">
+      <div class="chat-header-text">
+        <p class="chat-header-title">Chicanito Bot</p>
+        <p class="chat-header-sub">Pregúntame del menú, promos y ubicación</p>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-quick-replies" id="chatQuickReplies"></div>
+    <form class="chat-input-row" id="chatForm">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." autocomplete="off" aria-label="Escribe tu pregunta">
+      <button type="submit" class="chat-send" aria-label="Enviar pregunta">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20l18-8L3 4v6l12 2-12 2z"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="container">
     <p>&copy; 2026 Chicken Chicanito · Chicanito Móvil. Todos los derechos reservados.</p>
